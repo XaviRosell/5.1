@@ -1,0 +1,121 @@
+C: 
+1)
+
+#include <stdio.h>
+#define MAX_LIBROS 100
+
+
+struct Libro {
+    char titulo[50];
+    char autor[50];
+    int precio;
+    int likes;
+}
+
+
+
+2)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct Libro {
+    char titulo[50];
+    char autor[50];
+    int precio;
+    int likes;
+};
+
+int libros_con_likes(struct Libro libros[], int num_libros, int N, char vector_resultado[]) {
+int i, contador = 0;
+char temp[100];
+for (i = 0; i < num_libros; i++) {
+	if (libros[i].likes > N) {
+            sprintf(temp, "%s*%d/", libros[i].titulo, libros[i].precio);
+            strcat(vector_resultado, temp);
+            contador++;
+        }
+    }
+
+    return contador; 
+}
+
+
+
+
+3)
+int main() {
+    struct Libro libros[MAX_LIBROS];
+
+
+    libros[0].precio = 20;
+    libros[0].likes = 15;
+    strcpy(libros[0].titulo, "El principito");
+    strcpy(libros[0].autor, "Antoine de Saint-Exupéry");
+
+
+    libros[1].precio = 30;
+    libros[1].likes = 25;
+    strcpy(libros[1].titulo, "Harry Potter");
+    strcpy(libros[1].autor, "J.K. Rowling");
+
+
+    libros[2].precio = 15;
+    libros[2].likes = 10;
+    strcpy(libros[2].titulo, "Cien años de soledad");
+    strcpy(libros[2].autor, "Gabriel García Márquez");
+
+
+    int N;
+    printf("Introduce un número para obtener libros con más 'likes': ");
+    scanf("%d", &N);
+
+
+    char resultado[1000] = "";
+    int num_resultados = obtener_libros_likes(libros, 3, N, resultado);
+
+    printf("Libros con más 'likes' que %d:\n", N);
+    char *token = strtok(resultado, "/");
+    while (token != NULL) {
+        char titulo[100];
+        int precio;
+        sscanf(token, "%[^*]*%d", titulo, &precio);
+        printf("Título: %s, Precio: %d\n", titulo, precio);
+        token = strtok(NULL, "/");
+    }
+
+    return 0;
+}
+
+
+
+Linux:
+
+
+1)
+ls -1 a*.txt | wc -l
+
+
+2)
+#!/bin/bash
+
+
+if [ $# -ne 1 ]; then
+    echo "Uso: $0 <palabra>"
+    exit 1
+fi
+
+
+palabra="$1"
+
+archivos=$(ls -1 | grep "^a.*\.txt")
+
+echo "Escribeme una frase:"
+read frase
+
+for archivo in $archivos; 
+
+do
+    echo "$frase" >> "$archivo"
+    echo "La frase ha sido añadida exitosamente al archivo: $archivo"
+done
+
